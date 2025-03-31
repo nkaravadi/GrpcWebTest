@@ -1,45 +1,50 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react";
-import { getStockUpdates } from './StockDataService';
+            import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+            import { AgGridReact } from "ag-grid-react";
+            import { getStockUpdates } from './StockDataService';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+            ModuleRegistry.registerModules([AllCommunityModule]);
 
+            function App() {
+              const [stocksMap, setStocksMap] = useState({});
+              const gridRef = useRef(null);
 
-function App() {
-  const [rowData, setRowData] = useState([]);
-  const gridRef = useRef(null);
+              const columnDefs = [
+                { headerName: 'Symbol', field: 'symbol' },
+                { headerName: 'Price', field: 'price', valueFormatter: params => params.value ? params.value.toFixed(2) : '' },
+                { headerName: 'Timestamp', field: 'timestamp', valueFormatter: params => {
+                  return params.value ? new Date(params.value * 1000).toLocaleTimeString() : '';
+                }}
+              ];
 
-  const columnDefs = [
-    { headerName: 'Symbol', field: 'symbol' },
-    { headerName: 'Price', field: 'price' },
-    { headerName: 'Timestamp', field: 'timestamp' },
-  ];
+              useEffect(() => {
+                const stream = getStockUpdates('AAPL', (update) => {
+                  setStocksMap(prevStocks => ({
+                    ...prevStocks,
+                    [update.symbol]: update // Update the stock with the latest data
+                  }));
+                });
 
-  useEffect(() => {
-    const stream = getStockUpdates('AAPL', (update) => {
-      setRowData((prevData) => [...prevData, update]);
-      if (gridRef.current) {
-        gridRef.current.api.ensureIndexVisible(rowData.length - 1); // Scroll to new data
-      }
-    });
+                return () => {
+                  if (stream && stream.cancel) {
+                    stream.cancel();
+                  }
+                };
+              }, []);
 
-    return () => {
-      if (stream && stream.cancel) {
-        stream.cancel(); // Cancel the stream when the component unmounts
-      }
-    };
-  }, []);
+              // Convert stocks map to array for AG Grid
+              const rowData = Object.values(stocksMap);
 
-  return (
-      <div className="ag-theme-alpine" style={{ height: '400px', width: '600px' }}>
-        <AgGridReact
-            ref={gridRef}
-            columnDefs={columnDefs}
-            rowData={rowData}
-        />
-      </div>
-  );
-}
+              return (
+                <div className="ag-theme-alpine" style={{ height: '400px', width: '600px' }}>
+                  <AgGridReact
+                    ref={gridRef}
+                    columnDefs={columnDefs}
+                    rowData={rowData}
+                    getRowId={params => params.data.symbol} // Key rows by symbol
+                  />
+                </div>
+              );
+            }
 
-export default App;
+            export default App;

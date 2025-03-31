@@ -14,21 +14,22 @@ springBoot {
 }
 
 dependencies {
-    // Spring Boot core
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    // Spring Boot core (keep these)
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Add Armeria dependencies
+    implementation 'com.linecorp.armeria:armeria-spring-boot2-starter:1.24.3'
+    implementation 'com.linecorp.armeria:armeria-grpc:1.24.3'
+
+    // Optional but recommended Armeria additions
+    implementation 'com.linecorp.armeria:armeria-brave:1.24.3'  // For tracing support
 
     // Core gRPC libraries
     implementation 'io.grpc:grpc-services:1.54.0'
     implementation 'io.grpc:grpc-netty-shaded:1.54.0'
     implementation 'io.grpc:grpc-protobuf:1.54.0'
     implementation 'io.grpc:grpc-stub:1.54.0'
-
-    implementation 'io.zipkin.brave:brave:5.13.9'
-
-    // gRPC starter
-    implementation 'net.devh:grpc-server-spring-boot-starter:2.14.0.RELEASE'
 
     // Add Brave tracing libraries
     implementation 'io.zipkin.brave:brave-instrumentation-grpc:5.16.0'
