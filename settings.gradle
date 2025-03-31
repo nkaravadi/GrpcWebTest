@@ -1,0 +1,3 @@
+rootProject.name = 'stock-streaming-grpc'
+include 'backend'
+include 'frontend'

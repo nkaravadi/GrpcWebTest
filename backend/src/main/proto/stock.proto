@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.naga.grpcweb";
+option java_outer_classname = "ServiceProto";
+
+package com.naga.grpcweb;
+
+service StockService {
+  rpc GetStockUpdates (StockRequest) returns (stream StockUpdate);
+}
+
+message StockRequest {
+  string symbol = 1;
+}
+
+message StockUpdate {
+  string symbol = 1;
+  double price = 2;
+  int64 timestamp = 3;
+}
