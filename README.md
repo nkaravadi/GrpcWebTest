@@ -13,6 +13,7 @@
     - [Armeria (Selected Solution)](#4-armeria-selected-solution)
 - [Why Armeria Works Best](#why-armeria-works-best)
 - [Why Unframed Requests Are Important](#why-unframed-requests-are-important)
+- [Comparing different streaming technologies](#comparing-different-streaming-technologies)
 
 
 ## How it Works: gRPC-Web Streaming
@@ -143,3 +144,30 @@ Unframed requests are crucial for gRPC-Web compatibility because:
 4. Without unframed requests, browsers would reject the binary framing used in standard gRPC
 5. They allow streaming responses to work in browsers without WebSocket support
 
+# Comparing different streaming technologies
+
+Here is a comparison table for different streaming options to the web:
+
+| Feature/Option                | Polling | SSE (Server-Sent Events) | Fetch with ReadableStream | gRPC-Web | WebSockets |
+|-------------------------------|---------|--------------------------|---------------------------|----------|------------|
+| **Real-time Updates**         | No      | Yes                      | Yes                       | Yes      | Yes        |
+| **Bidirectional Communication**| No      | No                       | No                        | Yes      | Yes        |
+| **Browser Support**           | Yes     | Yes                      | Yes                       | Yes      | Yes        |
+| **Efficiency**                | Low     | Medium                   | High                      | High     | High       |
+| **Complexity**                | Low     | Low                      | Medium                    | High     | Medium     |
+| **Scalability**               | Low     | Medium                   | High                      | High     | High       |
+| **Error Handling**            | Basic   | Basic                    | Advanced                  | Advanced | Advanced   |
+| **Security**                  | Basic   | Basic                    | Advanced                  | Advanced | Advanced   |
+| **Protocol**                  | HTTP    | HTTP                     | HTTP                      | HTTP/2   | TCP        |
+| **Multiplexing**              | No      | No                       | Yes                       | Yes      | Yes        |
+| **Type Safety**               | No      | No                       | No                        | Yes      | No         |
+| **Code Generation**           | No      | No                       | No                        | Yes      | No         |
+
+### Final Viewpoint
+- **Polling**: Simple but inefficient and not suitable for real-time updates.
+- **SSE**: Good for unidirectional real-time updates, but lacks bidirectional communication.
+- **Fetch with ReadableStream**: Efficient and modern, but more complex to implement.
+- **gRPC-Web**: Highly efficient, supports bidirectional communication, type safety, and advanced features, but more complex to set up.
+- **WebSockets**: Efficient and supports bidirectional communication, but lacks some advanced features like type safety and built-in code generation.
+
+Each option has its strengths and weaknesses, and the best choice depends on the specific requirements of your application.
