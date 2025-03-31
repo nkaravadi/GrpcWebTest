@@ -127,3 +127,18 @@ Considering the user's specific requirements for gRPC, REST, gRPC-web, streaming
 60. Contributor manual — Armeria community, accessed March 31, 2025, [https://armeria.dev/community/](https://armeria.dev/community/)  
 61. Migrate web server from Undertow to Armeria · Issue \#397 · FgForrest/evitaDB \- GitHub, accessed March 31, 2025, [https://github.com/FgForrest/evitaDB/issues/397](https://github.com/FgForrest/evitaDB/issues/397)  
 62. Thank you for contributing to Armeria\! \- line engineering, accessed March 31, 2025, [https://engineering.linecorp.com/en/blog/thank-you-for-contributing-to-armeria/](https://engineering.linecorp.com/en/blog/thank-you-for-contributing-to-armeria/)
+
+
+
+Comprehensive Protocol Support: Armeria natively supports gRPC, REST, and gRPC-web on a single port, simplifying deployment and reducing the need for external proxies. This is particularly advantageous for gRPC-web integration, which often requires third-party solutions in other frameworks.   
+Robust Streaming Capabilities: Armeria leverages Reactive Streams for efficient asynchronous stream processing with non-blocking backpressure, crucial for handling real-time or large data transfers. It provides specific APIs like HttpFile and HttpResponseWriter for managing streaming responses with backpressure.   
+High Performance: Built on Netty with a reactive and asynchronous architecture, Armeria is designed for high concurrency and responsiveness. While performance can be workload-dependent, its REST implementation has shown to be competitive, and it offers efficient gRPC support.   
+Simplified Development Experience: Armeria offers an interactive web-based DocService for browsing and testing gRPC APIs, simplifying development and collaboration. It also integrates well with Spring Boot and other frameworks, allowing for flexible adoption.   
+Feature-Rich for Microservices: Armeria includes built-in support for essential microservice patterns like metrics (using Micrometer), distributed tracing (via Zipkin), load balancing, health checks, and service discovery through decorators.   
+Here are some of the best resources to learn more about Armeria:
+
+Armeria Official Website: https://armeria.dev/ - The primary source for documentation, tutorials, and the latest news about Armeria.   
+Armeria User Manual: https://armeria.dev/docs/ - Comprehensive documentation covering all aspects of Armeria, including setup, usage, and advanced features.   
+Armeria GitHub Repository: https://github.com/line/armeria - Explore the source code, report issues, and see the project's activity.   
+Armeria Examples: https://github.com/line/armeria-examples - A repository containing various examples demonstrating how to use different features of Armeria.   
+Armeria Community Page: https://armeria.dev/community/ - Find links to the Discord server, discussion forum, and developer guides for community support and engagement.   
